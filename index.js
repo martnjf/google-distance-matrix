@@ -22,7 +22,7 @@ var GOOGLE_DISTANCE_API_URL = 'https://maps.googleapis.com/maps/api/distancematr
   GOOGLE_SIGNATURE_KEY = process.env.GOOGLE_SIGNATURE_KEY || null;
 
 
-var GoogleDistanceMatrix = function() {
+var GoogleDistanceMatrix = function () {
   this.options = {
     origins: null,
     destinations: null,
@@ -49,7 +49,7 @@ function makeRequest(options, callback) {
   debug("request options", options)
   var requestURL = GOOGLE_DISTANCE_API_URL + qs.stringify(options, GOOGLE_DISTANCE_API_URL);
   debug("requestURL", requestURL)
-  request(requestURL, function(err, response, data) {
+  request(requestURL, function (err, response, data) {
     if (err || response.statusCode != 200) {
       return callback(new Error('Google API request error: ' + data));
     }
@@ -57,7 +57,7 @@ function makeRequest(options, callback) {
   })
 }
 
-GoogleDistanceMatrix.prototype.matrix = function(args, cb) {
+GoogleDistanceMatrix.prototype.matrix = function (args, cb) {
 
   // validate arguments
 
@@ -76,7 +76,7 @@ GoogleDistanceMatrix.prototype.matrix = function(args, cb) {
 
   // makes a request to google api
 
-  makeRequest(this.options, function(err, data) {
+  makeRequest(this.options, function (err, data) {
     if (err) {
       return callback(err);
     }
@@ -85,68 +85,68 @@ GoogleDistanceMatrix.prototype.matrix = function(args, cb) {
 
 }
 
-GoogleDistanceMatrix.prototype.mode = function(mode) {
+GoogleDistanceMatrix.prototype.mode = function (mode) {
   if (validTravelModes.indexOf(mode) < 0) {
     throw new Error('Invalid mode: ' + mode);
   }
   this.options.mode = mode;
 }
 
-GoogleDistanceMatrix.prototype.language = function(language) {
+GoogleDistanceMatrix.prototype.language = function (language) {
   this.options.language = language;
 }
 
-GoogleDistanceMatrix.prototype.avoid = function(avoid) {
+GoogleDistanceMatrix.prototype.avoid = function (avoid) {
   if (validRestrictions.indexOf(avoid) < 0) {
     throw new Error('Invalid restriction: ' + avoid);
   }
   this.options.avoid = avoid;
 }
 
-GoogleDistanceMatrix.prototype.units = function(units) {
+GoogleDistanceMatrix.prototype.units = function (units) {
   if (validUnits.indexOf(units) < 0) {
     throw new Error('Invalid units: ' + units);
   }
   this.options.units = units;
 }
 
-GoogleDistanceMatrix.prototype.departure_time = function(departure_time) {
+GoogleDistanceMatrix.prototype.departure_time = function (departure_time) {
   this.options.departure_time = departure_time;
 }
 
-GoogleDistanceMatrix.prototype.arrival_time = function(arrival_time) {
+GoogleDistanceMatrix.prototype.arrival_time = function (arrival_time) {
   this.options.arrival_time = arrival_time;
 }
 
-GoogleDistanceMatrix.prototype.key = function(key) {
+GoogleDistanceMatrix.prototype.key = function (key) {
   delete this.options.client;
   delete this.options.signature;
   this.options.key = key;
 }
 
-GoogleDistanceMatrix.prototype.client = function(client) {
+GoogleDistanceMatrix.prototype.client = function (client) {
   delete this.options.key;
   this.options.client = client;
 }
 
-GoogleDistanceMatrix.prototype.signature = function(signature) {
+GoogleDistanceMatrix.prototype.signature = function (signature) {
   delete this.options.key;
   this.options.signature = signature;
 }
 
-GoogleDistanceMatrix.prototype.traffic_model = function(trafficModel) {
+GoogleDistanceMatrix.prototype.traffic_model = function (trafficModel) {
   this.options.traffic_model = trafficModel;
 }
 
-GoogleDistanceMatrix.prototype.transit_mode = function(transitMode) {
+GoogleDistanceMatrix.prototype.transit_mode = function (transitMode) {
   this.options.transit_mode = transitMode;
 }
 
-GoogleDistanceMatrix.prototype.transit_routing_preference = function(transitRoutingPreference) {
+GoogleDistanceMatrix.prototype.transit_routing_preference = function (transitRoutingPreference) {
   this.options.transit_routing_preference = transitRoutingPreference;
 }
 
-GoogleDistanceMatrix.prototype.reset = function() {
+GoogleDistanceMatrix.prototype.reset = function () {
   this.options = {
     origins: null,
     destinations: null,
